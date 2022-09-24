@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 
 plugin=lightbulb.Plugin("auto_kick")
 
-@tasks.task(tasks.CronTrigger('* * * * *'), auto_start=True)
+@tasks.task(tasks.CronTrigger('5 0 * * *'), auto_start=True)
 async def auto_kick():
     bot = auto_kick._app
     cur = db.connect()
