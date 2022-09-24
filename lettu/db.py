@@ -10,7 +10,7 @@ def connect():
             port=credentials.PORT,
             database=credentials.DBNAME
         )
-        print("Connection to mariadb succesful")
+        #print("Connection to mariadb succesful")
         db.autocommit = True
         cur = db.cursor()
         return cur

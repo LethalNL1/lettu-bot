@@ -6,7 +6,7 @@ from datetime import date
 
 plugin=lightbulb.Plugin("check_anniversary")
 
-@tasks.task(tasks.CronTrigger('5 * * * *'), auto_start=True)
+@tasks.task(tasks.CronTrigger('5 0 * * *'), auto_start=True)
 async def check_birthday():
     bot = check_birthday._app
     cur = db.connect()

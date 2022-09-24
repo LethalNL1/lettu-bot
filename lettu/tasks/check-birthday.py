@@ -14,7 +14,7 @@ async def check_birthday():
     cur = db.connect()
     cur.execute("SELECT MemberID, Timezone, Birthday, GuildSettings.GuildID, GuildSettings.BirthdayRole, GuildSettings.AnnounceChannel, GuildSettings.DefaultTimezone FROM Members JOIN GuildSettings ON Members.GuildID=GuildSettings.GuildID WHERE Birthday IS NOT NULL AND GuildSettings.EnabledBirthday = 1;")
     for member_id, timezone, birthday, guild_id, birthday_role, announce_channel, default_timezone in cur:
-        if timezone == NULL:
+        if timezone == None:
             zone = pytz.timezone(default_timezone)
         else:
             zone = pytz.timezone(timezone)
@@ -30,7 +30,7 @@ async def check_birthday():
                 guild = await bot.rest.fetch_guild(guild_id)
                 member = await bot.rest.fetch_member(guild,member_id)
                 channel = await bot.rest.fetch_channel(announce_channel)
-                if birthday_role != NULL:
+                if birthday_role != None:
                     roles = await bot.rest.fetch_roles(guild)
                     for server_role in roles:
                         if str(server_role.id) == birthday_role:
@@ -44,7 +44,7 @@ async def check_birthday():
         else:
             if [guild_id, member_id] in bot.d.birthdays:
                 bot.d.birthdays.pop([guild_id, member_id])
-                if birthday_role != NULL:
+                if birthday_role != None:
                     guild = await bot.rest.fetch_guild(guild_id)
                     member = await bot.rest.fetch_member(guild,member_id)
                     roles = await bot.rest.fetch_roles(guild)
