@@ -7,7 +7,7 @@ import pytz
 
 plugin=lightbulb.Plugin("check_birthday")
 
-@tasks.task(tasks.CronTrigger('* * * * *'), auto_start=True) 
+@tasks.task(tasks.CronTrigger('0,30 * * * *'), auto_start=True) 
 async def check_birthday():
     bot = check_birthday._app
     utc = pytz.timezone('UTC').localize(datetime.utcnow())
