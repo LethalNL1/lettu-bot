@@ -7,7 +7,7 @@ import pytz
 
 plugin=lightbulb.Plugin("check_birthday")
 
-@tasks.task(tasks.CronTrigger('0,30 * * * *'), auto_start=True) 
+@tasks.task(tasks.CronTrigger('* * * * *'), auto_start=True) 
 async def check_birthday():
     bot = check_birthday._app
     utc = pytz.timezone('UTC').localize(datetime.utcnow())
@@ -43,7 +43,7 @@ async def check_birthday():
                 await bot.rest.create_message(channel, birthday_message)
         else:
             if [guild_id, member_id] in bot.d.birthdays:
-                bot.d.birthdays.pop([guild_id, member_id])
+                bot.d.birthdays.pop(bot.d.birthdays.index([guild_id, member_id]))
                 if birthday_role != None:
                     guild = await bot.rest.fetch_guild(guild_id)
                     member = await bot.rest.fetch_member(guild,member_id)
@@ -51,7 +51,7 @@ async def check_birthday():
                     for server_role in roles:
                         if str(server_role.id) == birthday_role:
                             role = server_role
-                    await bot.rest.remove_role_from_member(guild.member.user,role)
+                    await bot.rest.remove_role_from_member(guild,member.user,role)
     cur.close()
 
 def load(bot):
