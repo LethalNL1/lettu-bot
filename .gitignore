@@ -4,3 +4,4 @@ __pycache__
 commands/__pycache__
 listeners/__pycache__
 tasks/__pycache__
+commands/birthday-upcoming.py

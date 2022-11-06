@@ -37,9 +37,9 @@ async def check_birthday():
                             role = server_role
                     await bot.rest.add_role_to_member(guild,member.user,role)
                 if birthday_year != "1880":
-                    birthday_message = f"**Today is {member.mention}'s birthday!** They are now **{int(zone_year) - int(birthday_year)} years** old. Wish them a happy birthday today!"
+                    birthday_message = f"**Today is {member.mention}'s birthday!** They are now **{int(zone_year) - int(birthday_year)} years** old. Wish them a happy birthday!"
                 else:
-                    birthday_message = f"**Today is {member.mention}'s birthday!** Wish them a happy birthday today!"
+                    birthday_message = f"**Today is {member.mention}'s birthday!** Wish them a happy birthday!"
                 await bot.rest.create_message(channel, birthday_message)
         else:
             if [guild_id, member_id] in bot.d.birthdays:
@@ -59,13 +59,3 @@ def load(bot):
 
 def unload(bot):
     bot.remove_plugin(plugin)
-
-                    
-
-
-
-
-                
-
-            
-

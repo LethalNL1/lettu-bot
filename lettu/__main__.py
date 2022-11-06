@@ -35,4 +35,4 @@ if __name__ == "__main__":
         import uvloop
         uvloop.install()
     
-    create_bot().run(activity=hikari.presences.Activity(name="the voices in my head", type=2))                                                                                              
+    create_bot().run()                                                                                              
