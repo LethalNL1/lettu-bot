@@ -10,7 +10,38 @@ Lettu communicates with a MariaDB Database. Please refer to the MariaDB document
 1. Create a database named lettu
 2. Create the following tables:
 ```
-The SQL query to add the tables will be added in the future.
+CREATE TABLE `GuildSettings` (
+	  `GuildID` varchar(18) NOT NULL,
+	  `AdminChannel` varchar(18) DEFAULT NULL,
+	  `AnnounceChannel` varchar(18) DEFAULT NULL,
+	  `EnabledBirthday` tinyint(1) NOT NULL DEFAULT 0,
+	  `DefaultTimezone` varchar(32) DEFAULT NULL,
+	  `BirthdayRole` varchar(18) DEFAULT NULL,
+	  `EnabledAnniversary` tinyint(1) NOT NULL DEFAULT 0,
+	  `EnabledAutoKick` tinyint(1) NOT NULL DEFAULT 0,
+	  `AutoKickInterval` varchar(10) DEFAULT NULL,
+	  `EnabledKickWarning` tinyint(1) NOT NULL DEFAULT 0,
+	  PRIMARY KEY (`GuildID`),
+	  CONSTRAINT `GuildSettings_ibfk_1` FOREIGN KEY (`GuildID`) REFERENCES `Guilds` (`GuildID`)
+)
+
+CREATE TABLE `Guilds` (
+	  `GuildID` varchar(18) NOT NULL,
+	  PRIMARY KEY (`GuildID`)
+)
+
+CREATE TABLE `Members` (
+	  `GuildID` varchar(18) NOT NULL,
+	  `MemberID` varchar(18) NOT NULL,
+	  `AP` int(11) DEFAULT 0,
+	  `Timezone` varchar(32) DEFAULT NULL,
+	  `Birthday` date DEFAULT NULL,
+	  `JoinedAt` date NOT NULL,
+	  `LastActive` date DEFAULT curdate(),
+	  `LeftAt` date DEFAULT NULL,
+	  PRIMARY KEY (`GuildID`,`MemberID`),
+	  CONSTRAINT `Members_ibfk_1` FOREIGN KEY (`GuildID`) REFERENCES `Guilds` (`GuildID`)
+)
 ```
 3. Configure remote access to the database. This includes opening up your MariaDB port in your firewall.
 4. Install the MariaDB Python connector.
