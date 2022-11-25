@@ -4,7 +4,8 @@ from lightbulb.ext import tasks
 from lettu import db
 from datetime import date
 
-plugin=lightbulb.Plugin("check_anniversary")
+plugin = lightbulb.Plugin("check_anniversary")
+
 
 @tasks.task(tasks.CronTrigger('5 0 * * *'), auto_start=True)
 async def check_birthday():
@@ -19,12 +20,14 @@ async def check_birthday():
             year = int(curr_year) - int(year_joined)
             if year != 0:
                 guild = await bot.rest.fetch_guild(guild_id)
-                member = await bot.rest.fetch_member(guild,member_id)
+                member = await bot.rest.fetch_member(guild, member_id)
                 channel = await bot.rest.fetch_channel(announce_channel)
                 await bot.rest.create_message(channel, f"**Today is {member.mention}'s anniversary!** They have been in this server for **{year} years**.")
 
+
 def load(bot):
     bot.add_plugin(plugin)
+
 
 def unload(bot):
     bot.remove_plugin(plugin)

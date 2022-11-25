@@ -1,6 +1,7 @@
 from lettu import credentials
 import mariadb
 
+
 def connect():
     try:
         db = mariadb.connect(

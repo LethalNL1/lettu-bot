@@ -5,7 +5,8 @@ from lettu import db
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
-plugin=lightbulb.Plugin("auto_kick")
+plugin = lightbulb.Plugin("auto_kick")
+
 
 @tasks.task(tasks.CronTrigger('5 0 * * *'), auto_start=True)
 async def auto_kick():
@@ -21,30 +22,31 @@ async def auto_kick():
         elif unit == "Months":
             kick_date = current_date - relativedelta(months=amount)
         else:
-            kick_date = current_date - relativedelta(years=amount)                
+            kick_date = current_date - relativedelta(years=amount)
         guild = await bot.rest.fetch_guild(guild_id)
-        member = await bot.rest.fetch_member(guild,member_id)
+        member = await bot.rest.fetch_member(guild, member_id)
         try:
             channel = await bot.rest.fetch_channel(admin_channel)
         except:
-            owner = await bot.rest.fetch_member(guild,guild.owner_id)
+            owner = await bot.rest.fetch_member(guild, guild.owner_id)
             channel = await bot.rest.create_dm_channel(owner.user)
         dm_channel = await bot.rest.create_dm_channel(member.user)
         warning_date = kick_date + relativedelta(days=3)
         if str(warning_date) == str(last_active) and enabled_kick_warning == 1:
-            await bot.rest.create_message(channel, f"{member.mention} will be kicked in 3 days for being inactive for {autokick_interval}.")           
+            await bot.rest.create_message(channel, f"{member.mention} will be kicked in 3 days for being inactive for {autokick_interval}.")
             await bot.rest.create_message(dm_channel, f"You will be kicked from {guild.name} in 3 days for being inactive for too long ({autokick_interval}). If you want to stay in this server, you should send a message or join and leave a vc there. After that you should not get kicked.")
         elif kick_date >= last_active:
             print(member.username)
             print(f"{type(kick_date)} {kick_date}")
             print(f"{type(last_active)} {last_active}")
             await bot.rest.create_message(channel, f"{member.username} has been kicked for being inactive too long ({autokick_interval}).")
-            await bot.rest.create_message(dm_channel, f"You have been kicked from {guild.name} for being inactive for too long ({autokick_interval}).")      
+            await bot.rest.create_message(dm_channel, f"You have been kicked from {guild.name} for being inactive for too long ({autokick_interval}).")
     cur.close()
-            
+
 
 def load(bot):
     bot.add_plugin(plugin)
+
 
 def unload(bot):
     bot.remove_plugin(plugin)

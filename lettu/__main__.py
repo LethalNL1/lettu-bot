@@ -5,8 +5,8 @@ import lightbulb
 import miru
 
 from lightbulb.ext import tasks
-# from lettu import GUILD_ID
 from lettu import db
+
 
 def create_bot() -> lightbulb.BotApp:
 
@@ -18,7 +18,7 @@ def create_bot() -> lightbulb.BotApp:
         intents=hikari.Intents.ALL,
         # default_enabled_guilds=GUILD_ID,
     )
-    
+
     miru.load(bot)
 
     bot.load_extensions_from("./lettu/commands")
@@ -30,9 +30,10 @@ def create_bot() -> lightbulb.BotApp:
 
     return bot
 
+
 if __name__ == "__main__":
     if os.name != "nt":
         import uvloop
         uvloop.install()
-    
-    create_bot().run()                                                                                              
+
+    create_bot().run()
