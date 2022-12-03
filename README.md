@@ -1,5 +1,46 @@
 # lettu-bot
-Lettu is a Discord bot written in python. Lettu uses the Hikari and Lightbulb libraries to communicate with Discord's API. Lettu saves it's information in a remote MariaDB database. This is my first project, any advice, questions or contributions will be appreciated. 
+Lettu is a Discord bot written in python. Lettu uses the Hikari and Lightbulb libraries to communicate with Discord's API. Lettu saves it's information in a remote MariaDB database. This is my first project, any advice, questions or contributions will be appreciated.
+
+## Features
+Lettu aims to be a general purpose and administration discord bot.
+
+Lettu can:
+- Announce birthdays of members
+	- Give them a birthday role
+	- Remove the role automatically
+- Announce anniversaries of members
+- Kick Members who have not been active (FUTURE)
+	- Set the roles auto kick applies to (FUTURE)
+	- Remind people in dm that they are about to get kicked (FUTURE)
+	- Remind server admins that someone is about to get kicked (FUTURE)
+- Listen for activity
+	- Award points to users for being active (FUTURE)
+	- Award roles to users for having points (FUTURE)
+	- Remove points from users who are inactive (FUTURE)
+	- Remove roles from users losing points (FUTURE)
+- Interact with my Minecraft server
+	- Query the status of my minecraft server
+	- Turn the server on
+	- Whitelist their minecraft account on the server
+
+Members can:
+- Add their birthday
+- Add their timezone
+- Syncronize this information across all servers Lettu and them are in
+- Gain points and roles for being active (FUTURE)
+- Lose points and roles for being inactive (FUTURE)
+- Get kicked for being inactive (FUTURE)
+
+Admins can:
+- Toggle features of the bot on or off
+- Set the channel to announce admin messages
+- Set the channel to announce normal messages
+- Set the default timezone of the server
+- Set the interval of inactivity before a user is kicked (FUTURE)
+- Blacklist roles from being autokicked (FUTURE)
+- Blacklist roles from gaining points (FUTURE)
+- Set the amount of points gained per action (FUTURE)
+- Set the amount of points lost per timeframe (FUTURE)
 
 ## Installation
 In order to make the bot run without any errors, please follow the steps down below.

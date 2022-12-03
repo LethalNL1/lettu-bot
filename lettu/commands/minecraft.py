@@ -24,13 +24,12 @@ allowed_channels = [1041166235766902824]
 
 @lightbulb.option("name", "Your Minecraft name", type=str, required=False)
 @lightbulb.option("choice", "Select the option you want", choices=choice, required=True)
-@lightbulb.command("minecraft", "Interact with the minecraft server.")
+@lightbulb.command("minecraft", "Interact with the minecraft server.", auto_defer=True)
 @lightbulb.implements(commands.SlashCommand)
 async def minecraft(ctx: lightbulb.context.Context):
     member_id = ctx.author.id
     if ctx.guild_id in allowed_guilds:
         if ctx.channel_id in allowed_channels:
-            bot = ctx.app
             owner = ctx.get_guild().get_member(160699201586462728)
             if ctx.options.choice == "status":
                 try:
@@ -49,36 +48,50 @@ async def minecraft(ctx: lightbulb.context.Context):
                 except:
                     curr_time = datetime.now()
                     if curr_time.hour > 7 and curr_time.hour < 23:
-                        response = os.system(f"ping -c 1 {credentials.MC_IP}")
-                        if response == 0:
-                            print("Minecraft server unreachable. Restarting...")
+                        status_server = os.system(
+                            f"ping -c 1 {credentials.MC_IP}")
+                        if status_server == 0:
+                            response = await ctx.respond("Minecraft server unreachable. Restarting...")
                             os.system(
                                 f"ssh {credentials.USER}@{credentials.MC_IP} sudo systemctl restart minecraft-server")
                             os.system("exit")
                             status = 1
-                            while status == 1:
+                            tries = 0
+                            while status == 1 and tries <= 11:
                                 try:
                                     server.ping()
                                     status = 0
                                 except:
-                                    time.sleep(1)
-                            print("The server has restarted successfully!")
+                                    time.sleep(10)
+                                    tries += 1
+                            ctx.respond("The server has restarted successfully!")
                         else:
-                            print("Server is down. Starting...")
+                            response = await ctx.respond("Server is unreachable. Attempting to start...")
                             send_magic_packet(credentials.MC_MAC)
                             status = 1
-                            while status == 1:
+                            tries = 0
+                            while status == 1 and tries <= 11:
                                 try:
                                     server.ping()
                                     status = 0
                                 except:
-                                    time.sleep(1)
-                            print("The server has started successfully!")
+                                    time.sleep(6)
+                                    tries += 1
+                            if status == 0:
+                                await response.edit(
+                                    f"Server started succesfully!")
+                            else:
+                                await response.edit(
+                                    f"Server is still unreachable, please contact {owner.mention}.")
                     else:
                         await ctx.respond(
                             f"Cannot start the server from {end_time}:00 to {start_time}:00 (Europe/Amsterdam time).\n You can try contacting {owner.mention} if you really want to play.")
             else:
                 if ctx.options.name:
+                    try:
+                        server.ping()
+                    except:
+                        return await ctx.respond("Server is down. Please start it usingusing /minecraft choice:start")
                     api = API()
                     uuid = api.get_uuid(ctx.options.name)
                     if uuid:

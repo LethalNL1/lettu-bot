@@ -16,7 +16,6 @@ def create_bot() -> lightbulb.BotApp:
     bot = lightbulb.BotApp(
         token=_token,
         intents=hikari.Intents.ALL,
-        # default_enabled_guilds=GUILD_ID,
     )
 
     miru.load(bot)
@@ -26,7 +25,6 @@ def create_bot() -> lightbulb.BotApp:
     bot.load_extensions_from("./lettu/tasks")
     tasks.load(bot)
     bot.d.birthdays = []
-    # bot.d.lobbies = []
 
     return bot
 
