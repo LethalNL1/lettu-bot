@@ -34,4 +34,4 @@ if __name__ == "__main__":
         import uvloop
         uvloop.install()
 
-    create_bot().run()
+    create_bot().run(activity=hikari.Activity(name="mc.pebesma.xyz",type=hikari.ActivityType.PLAYING))

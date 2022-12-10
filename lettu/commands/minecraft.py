@@ -19,7 +19,7 @@ end_time = 23
 choice = ["status", "start", "whitelist"]
 
 allowed_guilds = [921149168494452766]
-allowed_channels = [1041166235766902824]
+allowed_channels = [1041166235766902824, 1050910349538373642]
 
 
 @lightbulb.option("name", "Your Minecraft name", type=str, required=False)
@@ -123,6 +123,9 @@ async def minecraft(ctx: lightbulb.context.Context):
                         file.close()
                         os.system(
                             f"scp whitelist.json {credentials.USER}@{credentials.MC_IP}:/home/{credentials.USER}/minecraft/whitelist.json")
+                        os.system(
+                            "ssh janjacob@192.168.178.2 ./minecraft/whitelist-reload.sh"
+                        )
                         await ctx.respond(f"Added {ctx.options.name} to whitelist.")
                     else:
                         await ctx.respond("This minecraft user doesn't exist, please try again.")
