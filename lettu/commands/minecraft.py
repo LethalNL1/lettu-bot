@@ -18,8 +18,8 @@ end_time = 23
 
 choice = ["status", "start", "whitelist"]
 
-allowed_guilds = [921149168494452766]
-allowed_channels = [1041166235766902824, 1050910349538373642]
+allowed_guilds = [921149168494452766, 577088205157826560]
+allowed_channels = [1041166235766902824, 1050910349538373642, 1012840888763945071]
 
 
 @lightbulb.option("name", "Your Minecraft name", type=str, required=False)
