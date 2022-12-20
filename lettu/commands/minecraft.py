@@ -14,7 +14,7 @@ import json
 
 server = JavaServer.lookup(f"{credentials.MC_DOM}:25565")
 start_time = 8
-end_time = 23
+end_time = 1
 
 choice = ["status", "start", "whitelist"]
 
@@ -46,8 +46,20 @@ async def minecraft(ctx: lightbulb.context.Context):
                     await ctx.respond(
                         f"Server ({credentials.MC_DOM}) is already running. If you have issues connecting please contact {owner.mention}. Don't forget to whitelist yourself using /minecraft choice:whitelist name:<Your minecraft name>.")
                 except:
-                    curr_time = datetime.now()
-                    if curr_time.hour > 7 and curr_time.hour < 23:
+                    curr_time = datetime.now().hour
+                    if start_time < end_time:
+                        if curr_time >= start_time and curr_time < end_time:
+                            allow_start = 1
+                        else:
+                            allow_start = 0
+                    else:
+                        if curr_time > end_time and curr_time >= start_time:
+                            allow_start = 1
+                        elif curr_time < end_time:
+                            allow_start = 1
+                        else:
+                            allow_start = 0
+                    if allow_start == 1:
                         status_server = os.system(
                             f"ping -c 1 {credentials.MC_IP}")
                         if status_server == 0:
@@ -85,7 +97,7 @@ async def minecraft(ctx: lightbulb.context.Context):
                                     f"Server is still unreachable, please contact {owner.mention}.")
                     else:
                         await ctx.respond(
-                            f"Cannot start the server from {end_time}:00 to {start_time}:00 (Europe/Amsterdam time).\n You can try contacting {owner.mention} if you really want to play.")
+                            f"Cannot start the server from {end_time}:00 to {start_time}:00 (Europe/Amsterdam time).\nYou can try contacting {owner.mention} if you really want to play.")
             else:
                 if ctx.options.name:
                     try:
